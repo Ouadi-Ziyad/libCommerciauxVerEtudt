@@ -1,59 +1,81 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace libCommerciaux
 {
+
+    using System;
+
     public class NoteFrais
     {
-        // Champs privés (les tests vont les chercher avec reflection)
-        private int numero;
+
         private DateTime dateNoteFrais;
+        private Commercial leCommercial;
         private double montantARembourser;
         private bool estRembourse;
-        private Commercial leCommercial;
+        private int numero;
+        private int dernierNumero = 0;
 
-        public NoteFrais(DateTime dateNoteFrais, Commercial leCommercial)
+
+        public NoteFrais(DateTime date, Commercial commercial)
         {
-            this.numero = 0; 
-            this.dateNoteFrais = dateNoteFrais;
-            this.leCommercial = leCommercial;
+            this.dateNoteFrais = date;
+            this.leCommercial = commercial;
             this.estRembourse = false;
-            this.montantARembourser = 0.0;
+            this.numero = 0;
+            this.montantARembourser = 1;
+            this.leCommercial.getMesNoteFrais().Add(this);
         }
+        public int Numero { get; set; }
+        public DateTime Date { get; set; }
+        public double montantaRembourser { get; set; }
+
+
 
         public double getMontantARembourser()
         {
-            return montantARembourser;
-        }
-
-        public void setMontantARembourser(double montant)
-        {
-            this.montantARembourser = montant;
+            return this.montantARembourser;
         }
 
         public Commercial getLeCommercial()
         {
-            return leCommercial;
+            return this.leCommercial;
         }
 
         public bool getEstRembourse()
         {
-            return estRembourse;
+            return this.estRembourse;
         }
+
 
         public void setRembourse()
         {
             this.estRembourse = true;
         }
 
-        public virtual double calculMontantARembourser()
+        public void setMontantARembourser()
         {
-            return montantARembourser;
+            this.montantARembourser = this.calculMontantARembourser();
+        }
+
+
+        public double calculMontantARembourser()
+        {
+            return 0;
         }
 
         public override string ToString()
         {
-            string remboursement = estRembourse ? "Remboursé" : "Non remboursé";
-            return $"Numéro : {numero}, Date : {dateNoteFrais:dd/MM/yyyy}, Montant à rembourser: {montantARembourser}€, {remboursement}";
+            return "Numéro : " + this.numero + " - Date : "
+                + this.dateNoteFrais.ToString()
+                + " - Montant à rembourser: "
+                + this.montantARembourser
+                + " euros - "
+                + (this.estRembourse ? "Remboursé" : "Non remboursé");
         }
     }
+
 }

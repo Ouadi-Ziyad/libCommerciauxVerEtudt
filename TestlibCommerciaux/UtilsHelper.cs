@@ -23,9 +23,9 @@ namespace TestlibCommerciaux
 
         public static Type GetClassType(Assembly assembly, string classname)
         {
-            var test= (from type in assembly.GetTypes()
-                    where type.Name == classname
-                    select type).SingleOrDefault();
+            var test = (from type in assembly.GetTypes()
+                        where type.Name == classname
+                        select type).SingleOrDefault();
             return test;
         }
 
